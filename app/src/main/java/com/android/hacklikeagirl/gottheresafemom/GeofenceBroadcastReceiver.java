@@ -19,7 +19,7 @@ package com.android.hacklikeagirl.gottheresafemom;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.content.SharedPreferences;
 
 public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
@@ -35,6 +35,13 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i(TAG, "onReceive called");
+      SharedPreferences sharedPref = context.getSharedPreferences("gottheresafemom", Context.MODE_PRIVATE);
+      String[] contactStrings = sharedPref.getString("contacts", "").split("\\#");
+      for (String contactString : contactStrings) {
+        String[] contactStringComponents = contactString.split("\\^");
+        String firstName = contactStringComponents[0];
+        String lastName = contactStringComponents[1];
+        String phone = contactStringComponents[2];
+      }
     }
 }

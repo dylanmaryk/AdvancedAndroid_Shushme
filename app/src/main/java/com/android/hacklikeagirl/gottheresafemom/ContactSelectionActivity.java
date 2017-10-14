@@ -59,7 +59,7 @@ public class ContactSelectionActivity extends Activity {
 
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null && data.hasExtra(com.onegravity.contactpicker.core.ContactPickerActivity.RESULT_CONTACT_DATA)) {
-      SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+      SharedPreferences sharedPref = getSharedPreferences("gottheresafemom", Context.MODE_PRIVATE);
       SharedPreferences.Editor editor = sharedPref.edit();
       List<Contact> contacts = (List<Contact>) data.getSerializableExtra(com.onegravity.contactpicker.core.ContactPickerActivity.RESULT_CONTACT_DATA);
       List<String> contactStrings = new ArrayList<>();
