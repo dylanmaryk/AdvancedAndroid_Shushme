@@ -30,17 +30,10 @@
 
         <receiver android:name=".GeofenceBroadcastReceiver" />
 
-        <activity
-            android:name=".SelectArrivingCheckMethod"
-            android:label="@string/title_activity_select_arriving_check_method"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".provider.SelectArrivalCheckMethod"></activity>
     </application>
 
-<<<<<<< HEAD
-=======
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.LOCATION_HARDWARE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
->>>>>>> 95acb4aceab2d60a440ef4e8e58f5e9497900f86
 </manifest>
