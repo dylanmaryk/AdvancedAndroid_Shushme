@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.shushme">
+    package="com.android.hacklikeagirl.gottheresafemom">
 
     <application
         android:allowBackup="true"
@@ -13,7 +13,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="insert-your-api-key-here" />
 
-        <activity android:name="com.example.android.shushme.MainActivity">
+        <activity android:name="com.android.hacklikeagirl.gottheresafemom.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,8 +21,8 @@
         </activity>
 
         <provider
-            android:name="com.example.android.shushme.provider.PlaceContentProvider"
-            android:authorities="com.example.android.shushme"
+            android:name="com.android.hacklikeagirl.gottheresafemom.provider.PlaceContentProvider"
+            android:authorities="com.android.hacklikeagirl.gottheresafemom"
             android:exported="false"/>
 
         <receiver android:name=".GeofenceBroadcastReceiver" />

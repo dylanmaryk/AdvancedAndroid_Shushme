@@ -1,4 +1,4 @@
-package com.example.android.shushme;
+package com.android.hacklikeagirl.gottheresafemom;
 
 /*
 * Copyright (C) 2017 The Android Open Source Project
@@ -36,7 +36,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.example.android.shushme.provider.PlaceContract;
+import com.android.hacklikeagirl.gottheresafemom.provider.PlaceContract;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
