@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBoxH0L3AJjDtpmEdnApGsFf8DK7LAmqpk" />
+            android:value="AIzaSyCkkZqARcohjf5c8xunp-OnDjmZWGUOF5I" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -37,4 +37,10 @@
         <activity android:name=".provider.SelectArrivalCheckMethod"></activity>
     </application>
 
+<<<<<<< HEAD
+=======
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.LOCATION_HARDWARE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+>>>>>>> 95acb4aceab2d60a440ef4e8e58f5e9497900f86
 </manifest>
