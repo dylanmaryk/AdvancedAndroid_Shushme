@@ -2,33 +2,40 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.android.hacklikeagirl.gottheresafemom">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="insert-your-api-key-here" />
+            android:value="AIzaSyBoxH0L3AJjDtpmEdnApGsFf8DK7LAmqpk" />
 
         <activity android:name="com.android.hacklikeagirl.gottheresafemom.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <provider
+
             android:name="com.android.hacklikeagirl.gottheresafemom.provider.PlaceContentProvider"
             android:authorities="com.android.hacklikeagirl.gottheresafemom"
             android:exported="false"/>
 
         <receiver android:name=".GeofenceBroadcastReceiver" />
 
+        <activity
+            android:name=".SelectArrivingCheckMethod"
+            android:label="@string/title_activity_select_arriving_check_method"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 </manifest>
