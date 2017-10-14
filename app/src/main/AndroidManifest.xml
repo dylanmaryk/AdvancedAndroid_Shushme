@@ -11,7 +11,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="insert-your-api-key-here" />
+            android:value="AIzaSyCkkZqARcohjf5c8xunp-OnDjmZWGUOF5I" />
 
         <activity android:name="com.android.hacklikeagirl.gottheresafemom.MainActivity">
             <intent-filter>
@@ -46,6 +46,7 @@
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.LOCATION_HARDWARE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 </manifest>
