@@ -2,6 +2,7 @@ package com.android.hacklikeagirl.gottheresafemom.provider;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
 
 import com.android.hacklikeagirl.gottheresafemom.R;
 
@@ -12,4 +13,5 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_arrival_check_method);
     }
+
 }
