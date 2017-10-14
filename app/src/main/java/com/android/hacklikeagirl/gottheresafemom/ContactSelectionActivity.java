@@ -50,8 +50,6 @@ public class ContactSelectionActivity extends Activity {
           Intent intent = new Intent(this, ContactSelectionActivity.class)
               .putExtra(ContactPickerActivity.EXTRA_CONTACT_BADGE_TYPE, ContactPictureType.ROUND.name())
               .putExtra(ContactPickerActivity.EXTRA_SHOW_CHECK_ALL, true)
-              .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION, ContactDescription.ADDRESS.name())
-              .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION_TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK)
               .putExtra(ContactPickerActivity.EXTRA_CONTACT_SORT_ORDER, ContactSortOrder.AUTOMATIC.name());
           startActivityForResult(intent, 0);
         }
