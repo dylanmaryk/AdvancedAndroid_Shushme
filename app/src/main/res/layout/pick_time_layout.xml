@@ -12,7 +12,8 @@
     <Button
         android:id="@+id/button_select_time"
         android:text="Set the time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timePicker1"/>
 
 </RelativeLayout>
