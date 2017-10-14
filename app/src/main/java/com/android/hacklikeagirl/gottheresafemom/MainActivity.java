@@ -17,6 +17,7 @@ package com.android.hacklikeagirl.gottheresafemom;
 */
 
 import android.app.NotificationManager;
+import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -117,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements
 
         mGeofencing = new Geofencing(this, mClient);
 
+      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 0);
     }
 
     /***
