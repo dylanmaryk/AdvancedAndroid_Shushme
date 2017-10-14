@@ -45,15 +45,15 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         boolean focusable = true; // lets taps outside the popup also dismiss it
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-        /*final Button setTimeButton = (Button) findViewById(R.id.button_select_time);
+
+        // show the popup window
+        popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
+        Button setTimeButton = (Button) popupView.findViewById(R.id.button_select_time);
         setTimeButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 popupWindow.dismiss();
             }
-        });*/
-
-        // show the popup window
-        popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
+        });
 
 
     }
