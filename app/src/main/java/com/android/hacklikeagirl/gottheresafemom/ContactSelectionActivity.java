@@ -62,11 +62,11 @@ public class ContactSelectionActivity extends Activity {
       SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
       SharedPreferences.Editor editor = sharedPref.edit();
       List<Contact> contacts = (List<Contact>) data.getSerializableExtra(com.onegravity.contactpicker.core.ContactPickerActivity.RESULT_CONTACT_DATA);
-      List numbers = new ArrayList();
+      List<String> contactStrings = new ArrayList<>();
       for (Contact contact : contacts) {
-        numbers.add(contact.getPhone(0));
+        contactStrings.add(contact.getFirstName() + "^" + contact.getLastName() + "^" + contact.getPhone(0));
       }
-      editor.putString("numbers", TextUtils.join(",", numbers));
+      editor.putString("contacts", TextUtils.join("#", contactStrings));
       editor.apply();
       finish();
     }
