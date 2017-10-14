@@ -36,6 +36,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
       SharedPreferences sharedPref = context.getSharedPreferences("gottheresafemom", Context.MODE_PRIVATE);
+      String message = sharedPref.getString("message", "");
       String[] contactStrings = sharedPref.getString("contacts", "").split("\\#");
       for (String contactString : contactStrings) {
         String[] contactStringComponents = contactString.split("\\^");

@@ -2,7 +2,9 @@ package com.android.hacklikeagirl.gottheresafemom;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -12,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.widget.EditText;
 import com.onegravity.contactpicker.contact.Contact;
 import com.onegravity.contactpicker.contact.ContactDescription;
 import com.onegravity.contactpicker.contact.ContactSortOrder;
@@ -60,7 +63,7 @@ public class ContactSelectionActivity extends Activity {
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null && data.hasExtra(com.onegravity.contactpicker.core.ContactPickerActivity.RESULT_CONTACT_DATA)) {
       SharedPreferences sharedPref = getSharedPreferences("gottheresafemom", Context.MODE_PRIVATE);
-      SharedPreferences.Editor editor = sharedPref.edit();
+      final SharedPreferences.Editor editor = sharedPref.edit();
       List<Contact> contacts = (List<Contact>) data.getSerializableExtra(com.onegravity.contactpicker.core.ContactPickerActivity.RESULT_CONTACT_DATA);
       List<String> contactStrings = new ArrayList<>();
       for (Contact contact : contacts) {
@@ -68,7 +71,18 @@ public class ContactSelectionActivity extends Activity {
       }
       editor.putString("contacts", TextUtils.join("#", contactStrings));
       editor.apply();
-      finish();
+      AlertDialog.Builder builder = new AlertDialog.Builder(this);
+      final EditText editText = new EditText(this);
+      builder.setView(editText);
+      builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+          editor.putString("message", editText.getText().toString());
+          editor.apply();
+          finish();
+        }
+      });
+      builder.show();
     }
   }
 }
