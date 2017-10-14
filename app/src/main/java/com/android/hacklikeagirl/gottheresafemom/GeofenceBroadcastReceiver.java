@@ -19,7 +19,8 @@ package com.android.hacklikeagirl.gottheresafemom;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.content.SharedPreferences;
+import android.telephony.SmsManager;
 
 public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
@@ -35,6 +36,16 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i(TAG, "onReceive called");
+      SharedPreferences sharedPref = context.getSharedPreferences("gottheresafemom", Context.MODE_PRIVATE);
+      String message = sharedPref.getString("message", "");
+      String[] contactStrings = sharedPref.getString("contacts", "").split("\\#");
+      SmsManager smsManager = SmsManager.getDefault();
+      for (String contactString : contactStrings) {
+        String[] contactStringComponents = contactString.split("\\^");
+        String firstName = contactStringComponents[0];
+        String lastName = contactStringComponents[1];
+        String phone = contactStringComponents[2];
+        smsManager.sendTextMessage(phone, null, message, null, null); // Use "5554" instead of "phone" to test on emulator
+      }
     }
 }
