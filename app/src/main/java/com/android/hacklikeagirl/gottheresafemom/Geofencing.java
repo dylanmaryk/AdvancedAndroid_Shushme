@@ -1,4 +1,4 @@
-package com.example.android.shushme;
+package com.android.hacklikeagirl.gottheresafemom;
 
 /*
 * Copyright (C) 2017 The Android Open Source Project
