@@ -18,17 +18,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.android.hacklikeagirl.gottheresafemom.ContactSelectionActivity;
 import com.android.hacklikeagirl.gottheresafemom.MainActivity;
 import com.android.hacklikeagirl.gottheresafemom.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import retrofit2.Call;
@@ -41,20 +37,12 @@ import static com.android.hacklikeagirl.gottheresafemom.MainActivity.PLACE_PICKE
 
 public class SelectArrivalCheckMethod extends AppCompatActivity {
 
-    RelativeLayout back_dim_layout;
-
-    TextView text_select_check_method;
-
     private boolean chosen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_arrival_check_method);
-
-        back_dim_layout = (RelativeLayout) findViewById(R.id.sharebac_dim_layout);
-
-        text_select_check_method = (TextView) findViewById(R.id.text_select_check_method);
 
         final Button buttonDetermineByTime = (Button) findViewById(R.id.button_determine_by_time);
         buttonDetermineByTime.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +84,6 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
             // when a place is selected or with the user cancels.
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
             Intent i = builder.build(this);
-            Intent ii = new Intent(SelectArrivalCheckMethod.this, MainActivity.class);
             startActivityForResult(i, PLACE_PICKER_REQUEST);
         } catch (GooglePlayServicesRepairableException e) {
             Log.e(MainActivity.class.getSimpleName(), String.format("GooglePlayServices Not Available [%s]", e.getMessage()));
@@ -105,6 +92,8 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         } catch (Exception e) {
             Log.e(MainActivity.class.getSimpleName(), String.format("PlacePicker Exception: %s", e.getMessage()));
         }
+
+        chosen = true;
     }
 
     public void onButtonDetermineByDateClick(View view) {
@@ -121,9 +110,6 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         boolean focusable = true; // lets taps outside the popup also dismiss it
-
-        //// TODO: 15.10.2017 dim is not working, text behind the popup looks bad 
-        back_dim_layout.setVisibility(View.VISIBLE);
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
         // show the popup window
@@ -165,13 +151,8 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         // show the popup window
         popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
         final DatePicker datePicker = (DatePicker) popupView.findViewById(R.id.flight_date_picker);
-
         final EditText flightNumberField = (EditText) popupView.findViewById(R.id.flight_number);
-
-        datePicker.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
         Button saveFlight = (Button) popupView.findViewById(R.id.button_save_the_flight);
-
-        flightNumberField.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
         saveFlight.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String flightNumber = flightNumberField.getText().toString();
@@ -197,16 +178,5 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
                 });
             }
         });
-    }
-
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PLACE_PICKER_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(data, this);
-                Intent ii = new Intent(SelectArrivalCheckMethod.this, ContactSelectionActivity.class);
-                SelectArrivalCheckMethod.this.startActivity(ii);
-            }
-        }
     }
 }
