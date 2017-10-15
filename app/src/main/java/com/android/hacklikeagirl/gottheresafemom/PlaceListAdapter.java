@@ -67,6 +67,12 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
         String placeAddress = mPlaces.get(position).getAddress().toString();
         holder.nameTextView.setText(placeName);
         holder.addressTextView.setText(placeAddress);
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               //todo delete view
+            }
+        });
     }
 
     public void swapPlaces(PlaceBuffer newPlaces){
@@ -95,11 +101,13 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
 
         TextView nameTextView;
         TextView addressTextView;
+        TextView delete;
 
         public PlaceViewHolder(View itemView) {
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.name_text_view);
             addressTextView = (TextView) itemView.findViewById(R.id.address_text_view);
+            delete = (TextView) itemView.findViewById(R.id.delete);
         }
 
     }

@@ -14,14 +14,18 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SelectArrivalCheckMethod extends AppCompatActivity {
 
-    private Button location = (Button) findViewById(R.id.button_determine_by_location);
-    private Button flightNumber = (Button) findViewById(R.id.button_determine_by_flightnr);
-    private Button time = (Button) findViewById(R.id.button_determine_by_time);
+    private Button location;
+    private Button flightNumber;
+    private Button time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_arrival_check_method);
+
+        location = (Button) findViewById(R.id.button_determine_by_location);
+        flightNumber = (Button) findViewById(R.id.button_determine_by_flightnr);
+        time = (Button) findViewById(R.id.button_determine_by_time);
 
         location.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,20 +38,13 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 14.10.2017  go to Pick Time Activity
+                //// TODO: 14.10.2017  go to Pick Time Activity
                 Intent myIntent = new Intent(SelectArrivalCheckMethod.this, MainActivity.class);
                 SelectArrivalCheckMethod.this.startActivity(myIntent);
             }
         });
 
-        flightNumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: 14.10.2017  go to Pick Flight Number Activity
-                Intent myIntent = new Intent(SelectArrivalCheckMethod.this, MainActivity.class);
-                SelectArrivalCheckMethod.this.startActivity(myIntent);
-            }
-        });
+
     }
 
 

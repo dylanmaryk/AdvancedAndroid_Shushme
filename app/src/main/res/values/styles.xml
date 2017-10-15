@@ -7,10 +7,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name = "NoActionBar" parent = "@android:style/Theme.Holo.Light">
-        <item name = "android:windowNoTitle">true</item>
-    </style>
-
     <style name="AppTheme.NoActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
