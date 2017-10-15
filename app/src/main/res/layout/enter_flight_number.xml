@@ -3,24 +3,26 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Please enter your flight number and the date"/>
-    <EditText
+  <EditText
+      android:gravity="center"
+      android:layout_marginTop="20dp"
+      android:layout_marginBottom="10dp"
         android:id="@+id/flight_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Flight number"
+        android:hint="Enter flight number"
         />
+
     <DatePicker
         android:id="@+id/flight_date_picker"
         android:layout_width="match_parent"
-        android:layout_height="393dp"></DatePicker>
+        android:layout_height="393dp"/>
     <Button
+        android:layout_marginTop="10dp"
         android:id="@+id/button_save_the_flight"
         android:layout_width="match_parent"
-        android:layout_height="85dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorButtons"
         android:text="Save the flight" />
 
 </LinearLayout>

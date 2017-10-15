@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/colorButtons"
+                android:backgroundTint="#616161"
                 android:text="@string/enable_geofences"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
         </LinearLayout>
@@ -106,7 +106,7 @@
             android:onClick="openSelectArrivalCheckMethod"
             android:text="add new journey"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
-            android:textColor="@android:color/white" />
+             />
 
         <TextView
             android:layout_width="wrap_content"

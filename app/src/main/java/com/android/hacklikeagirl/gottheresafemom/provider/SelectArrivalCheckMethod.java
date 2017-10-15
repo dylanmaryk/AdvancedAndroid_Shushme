@@ -18,6 +18,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -33,12 +35,20 @@ import static com.android.hacklikeagirl.gottheresafemom.MainActivity.PLACE_PICKE
 
 public class SelectArrivalCheckMethod extends AppCompatActivity {
 
+    RelativeLayout back_dim_layout;
+
+    TextView text_select_check_method;
+
     private boolean chosen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_arrival_check_method);
+
+        back_dim_layout = (RelativeLayout) findViewById(R.id.sharebac_dim_layout);
+
+        text_select_check_method = (TextView) findViewById(R.id.text_select_check_method);
 
         final Button buttonDetermineByTime = (Button) findViewById(R.id.button_determine_by_time);
         buttonDetermineByTime.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +113,9 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         boolean focusable = true; // lets taps outside the popup also dismiss it
+
+        //// TODO: 15.10.2017 dim is not working, text behind the popup looks bad 
+        back_dim_layout.setVisibility(View.VISIBLE);
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
         // show the popup window
@@ -110,19 +123,19 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         Button setTimeButton = (Button) popupView.findViewById(R.id.button_select_time);
         setTimeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-              int chosenHour = timePicker1.getHour();
-              int chosenMinute = timePicker1.getMinute();
-              NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
-              builder.setContentTitle("My notification");
-              builder.setContentText("Hello World!");
-              builder.setSmallIcon(R.drawable.ic_globe_primary_24dp);
-              Intent intent = new Intent(getApplicationContext(), SelectArrivalCheckMethod.class);
-              PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-              builder.setContentIntent(pendingIntent);
-              Notification notificationCompat = builder.build();
-              NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getApplicationContext());
-              managerCompat.notify(0, notificationCompat);
-              popupWindow.dismiss();
+                int chosenHour = timePicker1.getHour();
+                int chosenMinute = timePicker1.getMinute();
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+                builder.setContentTitle("My notification");
+                builder.setContentText("Hello World!");
+                builder.setSmallIcon(R.drawable.ic_globe_primary_24dp);
+                Intent intent = new Intent(getApplicationContext(), SelectArrivalCheckMethod.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                builder.setContentIntent(pendingIntent);
+                Notification notificationCompat = builder.build();
+                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getApplicationContext());
+                managerCompat.notify(0, notificationCompat);
+                popupWindow.dismiss();
             }
         });
 
@@ -146,11 +159,15 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         // show the popup window
         popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
         final DatePicker datePicker = (DatePicker) popupView.findViewById(R.id.flight_date_picker);
+        datePicker.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
         final EditText flightNumber = (EditText) popupView.findViewById(R.id.flight_number);
+        flightNumber.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
         Button saveFlight = (Button) popupView.findViewById(R.id.button_save_the_flight);
         saveFlight.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 datePicker.getDayOfMonth();
+                Intent ii = new Intent(SelectArrivalCheckMethod.this, MainActivity.class);
+                SelectArrivalCheckMethod.this.startActivity(ii);
                 popupWindow.dismiss();
             }
         });
