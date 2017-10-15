@@ -59,6 +59,9 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         Button setTimeButton = (Button) popupView.findViewById(R.id.button_select_time);
         setTimeButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
+                int chosenHour = timePicker1.getHour();
+                int chosenMinute = timePicker1.getMinute();
+                //// TODO: 15.10.2017  start notification at chosen time
                 popupWindow.dismiss();
             }
         });

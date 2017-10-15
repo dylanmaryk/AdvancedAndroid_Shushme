@@ -38,6 +38,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.android.hacklikeagirl.gottheresafemom.provider.PlaceContract;
+import com.android.hacklikeagirl.gottheresafemom.provider.SelectArrivalCheckMethod;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -56,6 +57,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
+import static android.R.attr.value;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -265,5 +268,10 @@ public class MainActivity extends AppCompatActivity implements
         ActivityCompat.requestPermissions(MainActivity.this,
                 new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                 PERMISSIONS_REQUEST_FINE_LOCATION);
+    }
+
+    public void openSelectArrivalCheckMethod (View v){
+        Intent myIntent = new Intent(MainActivity.this, SelectArrivalCheckMethod.class);
+        MainActivity.this.startActivity(myIntent);
     }
 }
