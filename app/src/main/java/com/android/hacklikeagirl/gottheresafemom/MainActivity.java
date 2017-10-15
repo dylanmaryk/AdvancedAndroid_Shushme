@@ -16,7 +16,6 @@ package com.android.hacklikeagirl.gottheresafemom;
 * limitations under the License.
 */
 
-import android.app.NotificationManager;
 import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -55,6 +54,9 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 
 public class MainActivity extends AppCompatActivity implements
         ConnectionCallbacks,
@@ -118,7 +120,14 @@ public class MainActivity extends AppCompatActivity implements
 
         mGeofencing = new Geofencing(this, mClient);
 
-      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 0);
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Roboto-Regular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 0);
+
     }
 
     /***
@@ -247,8 +256,10 @@ public class MainActivity extends AppCompatActivity implements
         } else {
             locationPermissions.setChecked(true);
             locationPermissions.setEnabled(false);
+
         }
     }
+
 
     public void onLocationPermissionClicked(View view) {
         ActivityCompat.requestPermissions(MainActivity.this,

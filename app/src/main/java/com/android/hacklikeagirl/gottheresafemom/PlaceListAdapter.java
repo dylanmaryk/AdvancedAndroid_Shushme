@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.hacklikeagirl.gottheresafemom.provider.PlaceDbHelper;
 import com.google.android.gms.location.places.PlaceBuffer;
 
 public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.PlaceViewHolder> {
@@ -62,11 +63,19 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
      * @param position The current position that needs to be loaded with data
      */
     @Override
-    public void onBindViewHolder(PlaceViewHolder holder, int position) {
+    public void onBindViewHolder(PlaceViewHolder holder, final int position) {
         String placeName = mPlaces.get(position).getName().toString();
         String placeAddress = mPlaces.get(position).getAddress().toString();
         holder.nameTextView.setText(placeName);
         holder.addressTextView.setText(placeAddress);
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlaceDbHelper dbHelper = new PlaceDbHelper(mContext);
+                // TODO: 15.10.2017 delete
+                //dbHelper.getWritableDatabase().delete(dbHelper.getDatabaseName(), ,null);
+            }
+        });
     }
 
     public void swapPlaces(PlaceBuffer newPlaces){
@@ -95,11 +104,13 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
 
         TextView nameTextView;
         TextView addressTextView;
+        TextView delete;
 
         public PlaceViewHolder(View itemView) {
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.name_text_view);
             addressTextView = (TextView) itemView.findViewById(R.id.address_text_view);
+            delete = (TextView) itemView.findViewById(R.id.delete);
         }
 
     }
