@@ -13,6 +13,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@drawable/eiffel"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -56,6 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:backgroundTint="@color/colorButtons"
                 android:text="@string/enable_geofences"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
         </LinearLayout>

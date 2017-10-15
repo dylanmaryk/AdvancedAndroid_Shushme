@@ -17,10 +17,12 @@ import android.widget.PopupWindow;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.hacklikeagirl.gottheresafemom.ContactSelectionActivity;
 import com.android.hacklikeagirl.gottheresafemom.MainActivity;
 import com.android.hacklikeagirl.gottheresafemom.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import static com.android.hacklikeagirl.gottheresafemom.MainActivity.PLACE_PICKER_REQUEST;
@@ -74,6 +76,7 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
             // when a place is selected or with the user cancels.
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
             Intent i = builder.build(this);
+            Intent ii = new Intent(SelectArrivalCheckMethod.this, MainActivity.class);
             startActivityForResult(i, PLACE_PICKER_REQUEST);
         } catch (GooglePlayServicesRepairableException e) {
             Log.e(MainActivity.class.getSimpleName(), String.format("GooglePlayServices Not Available [%s]", e.getMessage()));
@@ -82,8 +85,6 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         } catch (Exception e) {
             Log.e(MainActivity.class.getSimpleName(), String.format("PlacePicker Exception: %s", e.getMessage()));
         }
-
-        chosen = true;
     }
 
     public void onButtonDetermineByDateClick(View view) {
@@ -141,5 +142,16 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
                 popupWindow.dismiss();
             }
         });
+    }
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+                Intent ii = new Intent(SelectArrivalCheckMethod.this, ContactSelectionActivity.class);
+                SelectArrivalCheckMethod.this.startActivity(ii);
+            }
+        }
     }
 }
