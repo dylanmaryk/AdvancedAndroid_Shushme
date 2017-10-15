@@ -23,8 +23,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SelectArrivalCheckMethod extends AppCompatActivity {
 
-    private TimePicker timePicker1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +40,6 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
                 onButtonDetermineByFlightNumberClick(v);
             }
         });
-        timePicker1 = (TimePicker) findViewById(R.id.timePicker1);
 
     }
 
@@ -53,7 +50,7 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
 
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.pick_time_layout, null);
+        final View popupView = inflater.inflate(R.layout.pick_time_layout, null);
 
         // create the popup window
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -69,8 +66,6 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
                 popupWindow.dismiss();
             }
         });
-
-
     }
 
     public void onButtonDetermineByFlightNumberClick(View view) {
@@ -90,7 +85,7 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         // show the popup window
         popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
         final DatePicker datePicker = (DatePicker) popupView.findViewById(R.id.flight_date_picker);
-        final EditText flightNumberField = (EditText) popupView.findViewById(R.id.flight_number);
+        //final EditText flightNumberField = (EditText) popupView.findViewById(R.id.flight_number);
         //String flightNumber =flightNumberField.getText();
         Button saveFlight = (Button) popupView.findViewById(R.id.button_save_the_flight);
         saveFlight.setOnClickListener(new View.OnClickListener(){
