@@ -21,10 +21,12 @@ import android.widget.PopupWindow;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.hacklikeagirl.gottheresafemom.ContactSelectionActivity;
 import com.android.hacklikeagirl.gottheresafemom.MainActivity;
 import com.android.hacklikeagirl.gottheresafemom.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import retrofit2.Call;
@@ -129,6 +131,16 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
                 popupWindow.dismiss();
             }
         });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+                Intent ii = new Intent(SelectArrivalCheckMethod.this, ContactSelectionActivity.class);
+                SelectArrivalCheckMethod.this.startActivity(ii);
+            }
+        }
     }
 
     public void onButtonDetermineByFlightNumberClick(View view) {
