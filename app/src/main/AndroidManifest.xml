@@ -15,7 +15,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCkkZqARcohjf5c8xunp-OnDjmZWGUOF5I" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".WelcomeScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,6 +23,8 @@
 
             </intent-filter>
         </activity>
+
+        <activity android:name=".MainActivity" android:parentActivityName=".WelcomeScreenActivity" />
 
         <activity android:name=".provider.SelectArrivalCheckMethod" android:parentActivityName=".MainActivity"/>
 
