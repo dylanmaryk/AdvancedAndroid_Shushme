@@ -54,4 +54,12 @@ public class PlaceDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + PlaceEntry.TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
+/*
+    public void onDelete(SQLiteDatabase sqLiteDatabase, String s) {
+        // For now simply drop the table and create a new one.
+        final String SQL_DELETE_FROM_PLACES_TABLE = "DELETE * FROM" + PlaceEntry.TABLE_NAME + "WHERE ID = "
+                + s;
+        sqLiteDatabase.execSQL(SQL_DELETE_FROM_PLACES_TABLE);
+        onCreate(sqLiteDatabase);
+    }*/
 }
