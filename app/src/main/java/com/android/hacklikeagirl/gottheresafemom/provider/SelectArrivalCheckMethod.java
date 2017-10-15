@@ -37,7 +37,6 @@ import static com.android.hacklikeagirl.gottheresafemom.MainActivity.PLACE_PICKE
 
 public class SelectArrivalCheckMethod extends AppCompatActivity {
 
-    private boolean chosen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +91,6 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         } catch (Exception e) {
             Log.e(MainActivity.class.getSimpleName(), String.format("PlacePicker Exception: %s", e.getMessage()));
         }
-
-        chosen = true;
     }
 
     public void onButtonDetermineByDateClick(View view) {

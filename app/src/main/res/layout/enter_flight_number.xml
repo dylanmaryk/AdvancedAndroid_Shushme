@@ -21,6 +21,7 @@
         android:hint="Enter flight number"
         />
     <DatePicker
+        android:backgroundTint="@color/colorPrimaryLight"
         android:id="@+id/flight_date_picker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></DatePicker>
