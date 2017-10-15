@@ -6,6 +6,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TimePicker;
@@ -21,17 +23,23 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_arrival_check_method);
 
-    final Button button = (Button) findViewById(R.id.button_determine_by_time);
-         button.setOnClickListener(new View.OnClickListener() {
+    final Button buttonDetermineByTime = (Button) findViewById(R.id.button_determine_by_time);
+         buttonDetermineByTime.setOnClickListener(new View.OnClickListener() {
         public void onClick(View v) {
-            onButtonShowPopupWindowClick(v);
+            onButtonDetermineByDateClick(v);
         }
     });
-
+    final Button buttonDetermineByFlightNumber = (Button) findViewById(R.id.button_determine_by_flightnr);
+        buttonDetermineByFlightNumber.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onButtonDetermineByFlightNumberClick(v);
+            }
+        });
         timePicker1 = (TimePicker) findViewById(R.id.timePicker1);
+
     }
 
-    public void onButtonShowPopupWindowClick(View view) {
+    public void onButtonDetermineByDateClick(View view) {
 
         // get a reference to the already created main layout
         LinearLayout mainLayout = (LinearLayout) findViewById(R.id.activity_select_arrival_check_method);
@@ -56,5 +64,32 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         });
 
 
+    }
+
+    public void onButtonDetermineByFlightNumberClick(View view) {
+        // get a reference to the already created main layout
+        LinearLayout mainLayout = (LinearLayout) findViewById(R.id.activity_select_arrival_check_method);
+
+        // inflate the layout of the popup window
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.enter_flight_number, null);
+
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        // show the popup window
+        popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
+        final DatePicker datePicker = (DatePicker) popupView.findViewById(R.id.flight_date_picker);
+        final EditText flightNumber = (EditText) popupView.findViewById(R.id.flight_number);
+        Button saveFlight = (Button) popupView.findViewById(R.id.button_save_the_flight);
+        saveFlight.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                datePicker.getDayOfMonth();
+                popupWindow.dismiss();
+            }
+        });
     }
 }
