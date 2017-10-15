@@ -2,22 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/frame2">
+    android:background="@drawable/frame2"
+    android:weightSum="1"
+    >
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="153dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="150dp"
+        android:src="@drawable/MOBILELOGO"
+        />
 
     <Button
         android:id="@+id/welcome_button"
-        android:textAllCaps="true"
-        android:text="welcome"
-        android:elevation="3dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="330dp"
-        android:layout_gravity="end"
-        android:background="@color/colorButtons"
         android:layout_width="100dp"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="40dp"
+        android:background="@color/colorButtons"
+        android:elevation="3dp"
+        android:text="welcome"
+        android:textAllCaps="true"
+        />
 
 </LinearLayout>
