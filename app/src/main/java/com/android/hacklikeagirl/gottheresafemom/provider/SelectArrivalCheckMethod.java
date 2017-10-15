@@ -4,10 +4,10 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,14 +18,20 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
+import android.widget.Toast;
 import com.android.hacklikeagirl.gottheresafemom.MainActivity;
 import com.android.hacklikeagirl.gottheresafemom.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.android.hacklikeagirl.gottheresafemom.MainActivity.PLACE_PICKER_REQUEST;
 
@@ -50,6 +56,7 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
                 onButtonDetermineByFlightNumberClick(v);
             }
         });
+
         final Button buttonDetermineByLocation = (Button) findViewById(R.id.button_determine_by_location);
         buttonDetermineByLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,8 +74,9 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
      */
     public void onAddPlaceButtonClicked(View view) {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, getString(R.string.need_location_permission_message), Toast.LENGTH_LONG).show();
+            != PackageManager.PERMISSION_GRANTED) {
+            Toast
+                .makeText(this, getString(R.string.need_location_permission_message), Toast.LENGTH_LONG).show();
             return;
         }
         try {
@@ -95,7 +103,7 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
 
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.pick_time_layout, null);
+        final View popupView = inflater.inflate(R.layout.pick_time_layout, null);
         final TimePicker timePicker1 = (TimePicker) popupView.findViewById(R.id.timePicker1);
 
         // create the popup window
@@ -124,8 +132,6 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
               popupWindow.dismiss();
             }
         });
-
-
     }
 
     public void onButtonDetermineByFlightNumberClick(View view) {
@@ -134,7 +140,7 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
 
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.enter_flight_number, null);
+        final View popupView = inflater.inflate(R.layout.enter_flight_number, null);
 
         // create the popup window
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -145,12 +151,29 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         // show the popup window
         popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
         final DatePicker datePicker = (DatePicker) popupView.findViewById(R.id.flight_date_picker);
-        final EditText flightNumber = (EditText) popupView.findViewById(R.id.flight_number);
+        final EditText flightNumberField = (EditText) popupView.findViewById(R.id.flight_number);
         Button saveFlight = (Button) popupView.findViewById(R.id.button_save_the_flight);
         saveFlight.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                datePicker.getDayOfMonth();
-                popupWindow.dismiss();
+              String flightNumber = flightNumberField.getText().toString();
+              Retrofit retrofit = new Retrofit.Builder()
+                  .baseUrl("https://api.lufthansa.com")
+                  .addConverterFactory(GsonConverterFactory.create())
+                  .build();
+              LufthansaService lufthansaService = retrofit.create(LufthansaService.class);
+              Call<FlightStatus> call = lufthansaService.getFlightStatus(flightNumber);
+              call.enqueue(new Callback<FlightStatus>() {
+                @Override
+                public void onResponse(Call<FlightStatus> call, Response<FlightStatus> response) {
+                    TextView flightStatus = (TextView) popupView.findViewById(R.id.flight_status);
+                    flightStatus.setText(response.body().getFlightStatusResource().getFlights().getFlight().getArrival().getTimeStatus().getDefinition());
+                }
+
+                @Override
+                public void onFailure(Call<FlightStatus> call, Throwable t) {
+
+                }
+              });
             }
         });
     }
