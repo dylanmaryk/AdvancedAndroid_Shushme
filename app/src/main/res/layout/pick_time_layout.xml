@@ -16,6 +16,7 @@
         android:text="Set the time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/timePicker1"/>
+        android:layout_below="@id/timePicker1"
+        android:background="@drawable/buttonshape"/>
 
 </RelativeLayout>

@@ -31,7 +31,8 @@
         android:id="@+id/button_save_the_flight"
         android:layout_width="match_parent"
         android:layout_height="85dp"
-        android:text="Save the flight" />
+        android:text="Save the flight"
+        android:background="@drawable/buttonshape"/>
 
 
 </LinearLayout>
