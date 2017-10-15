@@ -1,10 +1,14 @@
 package com.android.hacklikeagirl.gottheresafemom.provider;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,7 +33,6 @@ import static com.android.hacklikeagirl.gottheresafemom.MainActivity.PLACE_PICKE
 
 public class SelectArrivalCheckMethod extends AppCompatActivity {
 
-    private TimePicker timePicker1;
     private boolean chosen = false;
 
     @Override
@@ -49,7 +52,6 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
                 onButtonDetermineByFlightNumberClick(v);
             }
         });
-        timePicker1 = (TimePicker) findViewById(R.id.timePicker1);
         final Button buttonDetermineByLocation = (Button) findViewById(R.id.button_determine_by_location);
         buttonDetermineByLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +97,7 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.pick_time_layout, null);
+        final TimePicker timePicker1 = (TimePicker) popupView.findViewById(R.id.timePicker1);
 
         // create the popup window
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -107,10 +110,19 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         Button setTimeButton = (Button) popupView.findViewById(R.id.button_select_time);
         setTimeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int chosenHour = timePicker1.getHour();
-                int chosenMinute = timePicker1.getMinute();
-                //// TODO: 15.10.2017  start notification at chosen time
-                popupWindow.dismiss();
+              int chosenHour = timePicker1.getHour();
+              int chosenMinute = timePicker1.getMinute();
+              NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+              builder.setContentTitle("My notification");
+              builder.setContentText("Hello World!");
+              builder.setSmallIcon(R.drawable.ic_globe_primary_24dp);
+              Intent intent = new Intent(getApplicationContext(), SelectArrivalCheckMethod.class);
+              PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+              builder.setContentIntent(pendingIntent);
+              Notification notificationCompat = builder.build();
+              NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getApplicationContext());
+              managerCompat.notify(0, notificationCompat);
+              popupWindow.dismiss();
             }
         });
 
