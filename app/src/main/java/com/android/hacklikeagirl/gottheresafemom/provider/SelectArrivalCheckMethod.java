@@ -128,8 +128,8 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
                 int chosenHour = timePicker1.getHour();
                 int chosenMinute = timePicker1.getMinute();
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
-                builder.setContentTitle("My notification");
-                builder.setContentText("Hello World!");
+                builder.setContentTitle("Are you there?");
+                builder.setContentText("Yes / Not yet");
                 builder.setSmallIcon(R.drawable.ic_globe_primary_24dp);
                 Intent intent = new Intent(getApplicationContext(), SelectArrivalCheckMethod.class);
                 PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
