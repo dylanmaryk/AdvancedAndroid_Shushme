@@ -14,8 +14,14 @@ import android.widget.PopupWindow;
 import android.widget.TimePicker;
 
 import com.android.hacklikeagirl.gottheresafemom.R;
+<<<<<<< HEAD
 
 import retrofit2.Call;
+=======
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+>>>>>>> 82b86e269e01c0fef695ef30caa1724bacafc362
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -100,8 +106,18 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
               LufthansaService lufthansaService = retrofit.create(LufthansaService.class);
-              Call<FlightStatus> flightStatus = lufthansaService.getFlightStatus();
-              Log.d("", flightStatus.request().getTimeStatusCode());
+              Call<FlightStatus> call = lufthansaService.getFlightStatus();
+              call.enqueue(new Callback<FlightStatus>() {
+                @Override
+                public void onResponse(Call<FlightStatus> call, Response<FlightStatus> response) {
+                  Log.d("", response.body().getTimeStatusCode());
+                }
+
+                @Override
+                public void onFailure(Call<FlightStatus> call, Throwable t) {
+
+                }
+              });
             }
         });
     }
