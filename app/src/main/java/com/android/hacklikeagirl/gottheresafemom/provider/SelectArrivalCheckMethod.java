@@ -2,6 +2,7 @@ package com.android.hacklikeagirl.gottheresafemom.provider;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.PopupWindow;
 import android.widget.TimePicker;
 
 import com.android.hacklikeagirl.gottheresafemom.R;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SelectArrivalCheckMethod extends AppCompatActivity {
 
@@ -89,6 +92,13 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
             public void onClick(View v) {
                 datePicker.getDayOfMonth();
                 popupWindow.dismiss();
+                Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://api.lufthansa.com")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+              LufthansaService lufthansaService = retrofit.create(LufthansaService.class);
+              FlightStatus flightStatus = lufthansaService.getFlightStatus();
+              Log.d("", flightStatus.getTimeStatusCode());
             }
         });
     }
