@@ -33,6 +33,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.R.attr.duration;
 import static com.android.hacklikeagirl.gottheresafemom.MainActivity.PLACE_PICKER_REQUEST;
 
 public class SelectArrivalCheckMethod extends AppCompatActivity {
@@ -165,8 +166,10 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
               call.enqueue(new Callback<FlightStatus>() {
                 @Override
                 public void onResponse(Call<FlightStatus> call, Response<FlightStatus> response) {
-                    TextView flightStatus = (TextView) popupView.findViewById(R.id.flight_status);
-                    flightStatus.setText(response.body().getFlightStatusResource().getFlights().getFlight().getArrival().getTimeStatus().getDefinition());
+
+                    CharSequence responsetext = response.body().getFlightStatusResource().getFlights().getFlight().getArrival().getTimeStatus().getDefinition();
+                    Toast toast = Toast.makeText(getApplicationContext(), responsetext, Toast.LENGTH_SHORT);
+                    toast.show();
                 }
 
                 @Override
