@@ -11,17 +11,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.android.hacklikeagirl.gottheresafemom.R;
-<<<<<<< HEAD
-
-import retrofit2.Call;
-=======
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
->>>>>>> 82b86e269e01c0fef695ef30caa1724bacafc362
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -83,7 +79,7 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
 
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.enter_flight_number, null);
+        final View popupView = inflater.inflate(R.layout.enter_flight_number, null);
 
         // create the popup window
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -110,6 +106,8 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
               call.enqueue(new Callback<FlightStatus>() {
                 @Override
                 public void onResponse(Call<FlightStatus> call, Response<FlightStatus> response) {
+                    TextView flightStatus = (TextView) popupView.findViewById(R.id.flight_status);
+                    flightStatus.setText(""); //you can put the flight status there as CharSequence
                   Log.d("", response.body().getTimeStatusCode());
                 }
 
