@@ -108,6 +108,16 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
              />
 
+        <Button
+            android:background="@color/colorButtons"
+            android:id="@+id/button_determine_by_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onAddPlaceButtonClicked"
+            android:layout_marginBottom="26dp"
+            android:elevation="3dp"
+            android:text="When I reach the location" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
