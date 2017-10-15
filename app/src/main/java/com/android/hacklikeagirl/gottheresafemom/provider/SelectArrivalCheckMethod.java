@@ -14,6 +14,8 @@ import android.widget.PopupWindow;
 import android.widget.TimePicker;
 
 import com.android.hacklikeagirl.gottheresafemom.R;
+
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -86,7 +88,8 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         // show the popup window
         popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
         final DatePicker datePicker = (DatePicker) popupView.findViewById(R.id.flight_date_picker);
-        final EditText flightNumber = (EditText) popupView.findViewById(R.id.flight_number);
+        final EditText flightNumberField = (EditText) popupView.findViewById(R.id.flight_number);
+        //String flightNumber =flightNumberField.getText();
         Button saveFlight = (Button) popupView.findViewById(R.id.button_save_the_flight);
         saveFlight.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
@@ -97,8 +100,8 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
               LufthansaService lufthansaService = retrofit.create(LufthansaService.class);
-              FlightStatus flightStatus = lufthansaService.getFlightStatus();
-              Log.d("", flightStatus.getTimeStatusCode());
+              Call<FlightStatus> flightStatus = lufthansaService.getFlightStatus();
+              Log.d("", flightStatus.request().getTimeStatusCode());
             }
         });
     }

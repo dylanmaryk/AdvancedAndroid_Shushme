@@ -16,15 +16,15 @@
             android:value="AIzaSyCkkZqARcohjf5c8xunp-OnDjmZWGUOF5I" />
 
         <activity android:name=".MainActivity">
+        </activity>
+
+        <activity android:name=".provider.SelectArrivalCheckMethod" android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
         </activity>
-
-        <activity android:name=".provider.SelectArrivalCheckMethod" android:parentActivityName=".MainActivity"/>
 
         <provider
             android:name=".provider.PlaceContentProvider"
