@@ -26,7 +26,6 @@ import com.android.hacklikeagirl.gottheresafemom.MainActivity;
 import com.android.hacklikeagirl.gottheresafemom.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import retrofit2.Call;
@@ -39,11 +38,21 @@ import static com.android.hacklikeagirl.gottheresafemom.MainActivity.PLACE_PICKE
 
 public class SelectArrivalCheckMethod extends AppCompatActivity {
 
+    Button addContacts;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_arrival_check_method);
+
+        final Button addContacts = (Button) findViewById(R.id.add_button);
+        addContacts.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent ii = new Intent(SelectArrivalCheckMethod.this, ContactSelectionActivity.class);
+                SelectArrivalCheckMethod.this.startActivity(ii);
+            }
+        });
 
         final Button buttonDetermineByTime = (Button) findViewById(R.id.button_determine_by_time);
         buttonDetermineByTime.setOnClickListener(new View.OnClickListener() {
@@ -133,15 +142,6 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         });
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PLACE_PICKER_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(data, this);
-                Intent ii = new Intent(SelectArrivalCheckMethod.this, ContactSelectionActivity.class);
-                SelectArrivalCheckMethod.this.startActivity(ii);
-            }
-        }
-    }
 
     public void onButtonDetermineByFlightNumberClick(View view) {
         // get a reference to the already created main layout
