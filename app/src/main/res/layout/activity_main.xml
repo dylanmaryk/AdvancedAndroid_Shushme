@@ -18,10 +18,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="24dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
 
         <TextView
             android:layout_width="wrap_content"
@@ -101,7 +102,7 @@
             android:layout_marginTop="12dp"
             android:background="@color/colorPrimary"
             android:onClick="openSelectArrivalCheckMethod"
-            android:text="@string/add_new_location"
+            android:text="add new journey"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             android:textColor="@android:color/white" />
 
