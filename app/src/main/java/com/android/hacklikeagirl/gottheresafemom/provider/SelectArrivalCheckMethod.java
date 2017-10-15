@@ -151,25 +151,22 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
         // show the popup window
         popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
         final DatePicker datePicker = (DatePicker) popupView.findViewById(R.id.flight_date_picker);
-        //final EditText flightNumberField = (EditText) popupView.findViewById(R.id.flight_number);
-        //String flightNumber =flightNumberField.getText();
+        final EditText flightNumberField = (EditText) popupView.findViewById(R.id.flight_number);
         Button saveFlight = (Button) popupView.findViewById(R.id.button_save_the_flight);
         saveFlight.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                datePicker.getDayOfMonth();
-                popupWindow.dismiss();
-                Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://api.lufthansa.com")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+              String flightNumber = flightNumberField.getText().toString();
+              Retrofit retrofit = new Retrofit.Builder()
+                  .baseUrl("https://api.lufthansa.com")
+                  .addConverterFactory(GsonConverterFactory.create())
+                  .build();
               LufthansaService lufthansaService = retrofit.create(LufthansaService.class);
-              Call<FlightStatus> call = lufthansaService.getFlightStatus();
+              Call<FlightStatus> call = lufthansaService.getFlightStatus(flightNumber);
               call.enqueue(new Callback<FlightStatus>() {
                 @Override
                 public void onResponse(Call<FlightStatus> call, Response<FlightStatus> response) {
                     TextView flightStatus = (TextView) popupView.findViewById(R.id.flight_status);
-                    flightStatus.setText(""); //you can put the flight status there as CharSequence
-                  Log.d("", response.body().getTimeStatusCode());
+                    flightStatus.setText(response.body().getFlightStatusResource().getFlights().getFlight().getArrival().getTimeStatus().getDefinition());
                 }
 
                 @Override
