@@ -23,8 +23,8 @@
         android:layout_height="40dp"
         android:layout_gravity="bottom|end"
         android:background="@color/colorButtons"
-        android:elevation="3dp"
-        android:text="welcome"
+        android:elevation="@dimen/elevation"
+        android:text="@string/welcome"
         android:textAllCaps="true" />
 
 

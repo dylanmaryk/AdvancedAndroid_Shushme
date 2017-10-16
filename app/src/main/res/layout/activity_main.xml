@@ -102,7 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorButtons"
             android:onClick="openSelectArrivalCheckMethod"
             android:text="add new journey"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"

@@ -14,4 +14,5 @@
     <string name="touch_to_relaunch">Touch to launch the app.</string>
     <string name="back_to_normal">Back to normal</string>
     <string name="title_activity_select_arriving_check_method">SelectArrivingCheckMethod</string>
+    <string name="welcome">welcome</string>
 </resources>
