@@ -15,7 +15,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/eiffel">
+    android:background="@drawable/background">
 
 
     <LinearLayout
@@ -127,6 +127,18 @@
             android:orientation="vertical"
             android:visibility="gone">
 
+            <TextView
+                android:id="@+id/text_select_check_method"
+                style="@style/Heading"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".3"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="How do you want your\nfamily and friends\nnotified?"
+                android:textAllCaps="false"
+                android:textSize="20dp" />
+
 
             <Button
                 android:id="@+id/button_determine_by_location"
@@ -147,13 +159,6 @@
                 android:elevation="3dp"
                 android:text="At a specific time" />
 
-            <Button
-                android:id="@+id/button_determine_by_flightnr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorButtons"
-                android:elevation="3dp"
-                android:text="When my flight arrives" />
         </LinearLayout>
 
         <TextView

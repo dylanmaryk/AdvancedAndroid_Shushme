@@ -163,12 +163,6 @@ public class MainActivity extends AppCompatActivity implements
                 onButtonDetermineByDateClick(v);
             }
         });
-        final Button buttonDetermineByFlightNumber = (Button) findViewById(R.id.button_determine_by_flightnr);
-        buttonDetermineByFlightNumber.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                onButtonDetermineByFlightNumberClick(v);
-            }
-        });
 
         final Button buttonDetermineByLocation = (Button) findViewById(R.id.button_determine_by_location);
         buttonDetermineByLocation.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 permissionsLayout.setVisibility(View.VISIBLE);
                 onAddPlaceButtonClicked(v);
+
             }
         });
 
@@ -310,6 +305,8 @@ public class MainActivity extends AppCompatActivity implements
             // when a place is selected or with the user cancels.
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
             Intent i = builder.build(this);
+            chooseMethod.setVisibility(View.GONE);
+            addNewJourney.setVisibility(View.VISIBLE);
             startActivityForResult(i, PLACE_PICKER_REQUEST);
         } catch (GooglePlayServicesRepairableException e) {
             Log.e(MainActivity.class.getSimpleName(), String.format("GooglePlayServices Not Available [%s]", e.getMessage()));
@@ -369,57 +366,4 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    public void onButtonDetermineByFlightNumberClick(View view) {
-        // get a reference to the already created main layout
-        RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.activity_main);
-
-        // inflate the layout of the popup window
-        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        final View popupView = inflater.inflate(R.layout.enter_flight_number, null);
-
-        // create the popup window
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
-        // show the popup window
-        popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
-        back_dim_layout.setVisibility(View.VISIBLE);
-
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                back_dim_layout.setVisibility(View.GONE);
-            }
-        });
-        final DatePicker datePicker = (DatePicker) popupView.findViewById(R.id.flight_date_picker);
-        final EditText flightNumberField = (EditText) popupView.findViewById(R.id.flight_number);
-        Button saveFlight = (Button) popupView.findViewById(R.id.button_save_the_flight);
-        saveFlight.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String flightNumber = flightNumberField.getText().toString();
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://api.lufthansa.com")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                LufthansaService lufthansaService = retrofit.create(LufthansaService.class);
-                Call<FlightStatus> call = lufthansaService.getFlightStatus(flightNumber);
-                call.enqueue(new Callback<FlightStatus>() {
-                    @Override
-                    public void onResponse(Call<FlightStatus> call, Response<FlightStatus> response) {
-
-                        CharSequence responsetext = response.body().getFlightStatusResource().getFlights().getFlight().getArrival().getTimeStatus().getDefinition();
-                        Toast toast = Toast.makeText(getApplicationContext(), responsetext, Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<FlightStatus> call, Throwable t) {
-
-                    }
-                });
-            }
-        });
-    }
 }

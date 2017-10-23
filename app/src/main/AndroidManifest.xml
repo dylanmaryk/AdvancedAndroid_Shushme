@@ -25,9 +25,6 @@
 
         <activity android:name=".provider.MainActivity" android:parentActivityName=".WelcomeScreenActivity" />
 
-        <activity android:name=".provider.SelectArrivalCheckMethod" android:parentActivityName=".provider.MainActivity">
-        </activity>
-
         <provider
             android:name=".provider.PlaceContentProvider"
             android:authorities="com.android.hacklikeagirl.gottheresafemom"
