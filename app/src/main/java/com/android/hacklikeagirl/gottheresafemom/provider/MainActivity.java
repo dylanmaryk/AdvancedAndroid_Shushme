@@ -50,6 +50,7 @@ import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.hacklikeagirl.gottheresafemom.ContactSelectionActivity;
 import com.android.hacklikeagirl.gottheresafemom.Geofencing;
 import com.android.hacklikeagirl.gottheresafemom.PlaceListAdapter;
 import com.android.hacklikeagirl.gottheresafemom.R;
@@ -301,6 +302,8 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public void openSelectArrivalCheckMethod (View v){
+        Intent i = new Intent(MainActivity.this, ContactSelectionActivity.class);
+        startActivity(i);
         addNewJourney.setVisibility(View.GONE);
         chooseMethod.setVisibility(View.VISIBLE);
     }
@@ -350,6 +353,8 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onDismiss() {
                 back_dim_layout.setVisibility(View.GONE);
+                chooseMethod.setVisibility(View.GONE);
+                addNewJourney.setVisibility(View.VISIBLE);
             }
         });
 
