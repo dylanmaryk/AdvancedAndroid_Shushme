@@ -53,6 +53,7 @@ import android.widget.Toast;
 import com.android.hacklikeagirl.gottheresafemom.Geofencing;
 import com.android.hacklikeagirl.gottheresafemom.PlaceListAdapter;
 import com.android.hacklikeagirl.gottheresafemom.R;
+import com.android.hacklikeagirl.gottheresafemom.TimeListAdapter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -89,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements
 
     // Member variables
     private PlaceListAdapter mAdapter;
+    private TimeListAdapter timeListAdapter;
+    private RecyclerView timeRecyclerView;
     private RecyclerView mRecyclerView;
     private boolean mIsEnabled;
     private GoogleApiClient mClient;
@@ -97,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements
     private LinearLayout chooseMethod;
     private LinearLayout permissionsLayout;
     private RelativeLayout back_dim_layout;
+    public ArrayList<String> times_list;
+    public String chosenTime;
 
     /**
      * Called when the activity is starting
@@ -107,12 +112,19 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        times_list = new ArrayList<>();
 
         // Set up the recycler view
         mRecyclerView = (RecyclerView) findViewById(R.id.places_list_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new PlaceListAdapter(this, null);
         mRecyclerView.setAdapter(mAdapter);
+
+        //set up times rv
+        timeRecyclerView = (RecyclerView) findViewById(R.id.times_list_recycler_view);
+        timeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        timeListAdapter = new TimeListAdapter(this, null);
+        timeRecyclerView.setAdapter(timeListAdapter);
 
         // Initialize the switch state and Handle enable/disable switch change
         Switch onOffSwitch = (Switch) findViewById(R.id.enable_switch);
@@ -331,6 +343,7 @@ public class MainActivity extends AppCompatActivity implements
         // create the popup window
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+
         boolean focusable = true; // lets taps outside the popup also dismiss it
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
@@ -348,6 +361,10 @@ public class MainActivity extends AppCompatActivity implements
                 back_dim_layout.setVisibility(View.GONE);
                 int chosenHour = timePicker1.getHour();
                 int chosenMinute = timePicker1.getMinute();
+                chosenTime = Integer.toString(chosenHour).concat(":").concat(Integer.toString(chosenMinute));
+                times_list.add(chosenTime);
+                timeListAdapter.swapTimes(times_list);
+                timeListAdapter.notifyDataSetChanged();
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
                 builder.setContentTitle("Are you there?");
                 builder.setContentText("      Yes      |      Not yet");

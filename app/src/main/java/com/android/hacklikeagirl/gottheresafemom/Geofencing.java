@@ -129,6 +129,7 @@ public class Geofencing implements ResultCallback {
         }
     }
 
+
     /***
      * Creates a GeofencingRequest object using the mGeofenceList ArrayList of Geofences
      * Used by {@code #registerGeofences}
