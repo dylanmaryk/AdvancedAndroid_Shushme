@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements
     private LinearLayout chooseMethod;
     private LinearLayout permissionsLayout;
     private RelativeLayout back_dim_layout;
-    public ArrayList<String> times_list;
+    public static ArrayList<String> times_list;
     public String chosenTime;
 
     /**

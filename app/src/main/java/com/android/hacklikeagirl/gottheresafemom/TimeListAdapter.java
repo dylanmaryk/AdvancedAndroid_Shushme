@@ -57,7 +57,7 @@ public class TimeListAdapter extends RecyclerView.Adapter<TimeListAdapter.TimeVi
     public void onBindViewHolder(TimeListAdapter.TimeViewHolder holder, final int position) {
 
         String date = "12.07.2018";
-        holder.timeTextView.setText("put some real data here");
+        holder.timeTextView.setText(MainActivity.times_list.get(position));
         holder.dateTextView.setText(date);
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
