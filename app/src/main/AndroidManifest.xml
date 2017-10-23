@@ -23,9 +23,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity" android:parentActivityName=".WelcomeScreenActivity" />
+        <activity android:name=".provider.MainActivity" android:parentActivityName=".WelcomeScreenActivity" />
 
-        <activity android:name=".provider.SelectArrivalCheckMethod" android:parentActivityName=".MainActivity">
+        <activity android:name=".provider.SelectArrivalCheckMethod" android:parentActivityName=".provider.MainActivity">
         </activity>
 
         <provider

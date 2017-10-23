@@ -7,6 +7,6 @@ import retrofit2.http.Path;
 
 interface LufthansaService {
   @Headers("Authorization: Bearer 62zvytspycvatkpx6ba8jxdz")
-  @GET("v1/operations/flightstatus/{flightNumber}/2017-10-15")
+  @GET("v1/operations/flightstatus/{flightNumber}/2017-10-23")
   Call<FlightStatus> getFlightStatus(@Path("flightNumber") String flightNumber);
 }

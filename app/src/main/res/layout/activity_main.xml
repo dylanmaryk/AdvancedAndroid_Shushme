@@ -12,111 +12,149 @@
  limitations under the License.-->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:background="@drawable/eiffel"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/eiffel">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/settings_label"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/colorPrimaryDark" />
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dip"
-            android:layout_marginTop="4dp"
-            android:background="@color/colorPrimary" />
+        android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/permissions_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="4dp"
-                android:paddingRight="8dp"
-                android:paddingTop="4dp"
-                android:src="@drawable/ic_globe_primary_24dp" />
-
-            <Switch
-                android:id="@+id/enable_switch"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:backgroundTint="#616161"
-                android:text="@string/enable_geofences"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="4dp"
-                android:paddingRight="8dp"
-                android:paddingTop="4dp"
-                android:src="@drawable/ic_my_location_primary_24dp" />
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/location_permissions"
+                android:layout_marginTop="12dp"
+                android:text="@string/settings_label"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/colorPrimaryDark" />
 
-            <RelativeLayout
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:layout_marginTop="4dp"
+                android:background="@color/colorPrimaryDark" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <CheckBox
-                    android:id="@+id/location_permission_checkbox"
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="8dp"
-                    android:onClick="onLocationPermissionClicked" />
+                    android:paddingBottom="4dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="4dp"
+                    android:src="@drawable/ic_globe_primary_24dp" />
 
-            </RelativeLayout>
+                <Switch
+                    android:id="@+id/enable_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:text="@string/enable_geofences"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="4dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="4dp"
+                    android:src="@drawable/ic_my_location_primary_24dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/location_permissions"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/black" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <CheckBox
+                        android:id="@+id/location_permission_checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="8dp"
+                        android:onClick="onLocationPermissionClicked" />
+
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <Button
+            android:id="@+id/add_new_journey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="42dp"
             android:background="@color/colorButtons"
             android:onClick="openSelectArrivalCheckMethod"
             android:text="add new journey"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
-             />
+            android:visibility="visible" />
 
-        <Button
-            android:background="@color/colorButtons"
-            android:id="@+id/button_determine_by_location"
+        <LinearLayout
+            android:id="@+id/select_method_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onAddPlaceButtonClicked"
-            android:layout_marginBottom="26dp"
-            android:elevation="3dp"
-            android:text="When I reach the location" />
+            android:layout_marginTop="42dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+
+            <Button
+                android:id="@+id/button_determine_by_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="26dp"
+                android:background="@color/colorButtons"
+                android:elevation="3dp"
+                android:onClick="onAddPlaceButtonClicked"
+                android:text="When I reach the location" />
+
+            <Button
+                android:id="@+id/button_determine_by_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="26dp"
+                android:background="@color/colorButtons"
+                android:elevation="3dp"
+                android:text="At a specific time" />
+
+            <Button
+                android:id="@+id/button_determine_by_flightnr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorButtons"
+                android:elevation="3dp"
+                android:text="When my flight arrives" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -130,12 +168,13 @@
             android:layout_width="fill_parent"
             android:layout_height="2dip"
             android:layout_marginTop="4dp"
-            android:background="@color/colorPrimary" />
+            android:background="@color/colorPrimaryDark" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/places_list_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp" />
 
     </LinearLayout>
 
@@ -161,6 +200,13 @@
             android:text="@string/privacy"
             android:textAlignment="center" />
     </LinearLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/back_dim_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#C0000000"
+        android:visibility="gone" />
 
 
 </RelativeLayout>

@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import static android.R.attr.value;
+import com.android.hacklikeagirl.gottheresafemom.provider.MainActivity;
 
 /**
  * Created by Anna Morgiel on 15.10.2017.

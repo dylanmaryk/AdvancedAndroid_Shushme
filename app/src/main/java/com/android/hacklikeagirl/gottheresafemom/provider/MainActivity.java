@@ -1,4 +1,4 @@
-package com.android.hacklikeagirl.gottheresafemom;
+package com.android.hacklikeagirl.gottheresafemom.provider;
 
 /*
 * Copyright (C) 2017 The Android Open Source Project
@@ -17,6 +17,8 @@ package com.android.hacklikeagirl.gottheresafemom;
 */
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,18 +29,30 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.android.hacklikeagirl.gottheresafemom.provider.PlaceContract;
-import com.android.hacklikeagirl.gottheresafemom.provider.SelectArrivalCheckMethod;
+import com.android.hacklikeagirl.gottheresafemom.Geofencing;
+import com.android.hacklikeagirl.gottheresafemom.PlaceListAdapter;
+import com.android.hacklikeagirl.gottheresafemom.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -56,6 +70,11 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 
@@ -74,6 +93,10 @@ public class MainActivity extends AppCompatActivity implements
     private boolean mIsEnabled;
     private GoogleApiClient mClient;
     private Geofencing mGeofencing;
+    private Button addNewJourney;
+    private LinearLayout chooseMethod;
+    private LinearLayout permissionsLayout;
+    private RelativeLayout back_dim_layout;
 
     /**
      * Called when the activity is starting
@@ -121,6 +144,11 @@ public class MainActivity extends AppCompatActivity implements
 
         mGeofencing = new Geofencing(this, mClient);
 
+        addNewJourney = (Button) findViewById(R.id.add_new_journey);
+        chooseMethod = (LinearLayout) findViewById(R.id.select_method_layout);
+        permissionsLayout = (LinearLayout) findViewById(R.id.permissions_layout);
+        back_dim_layout = (RelativeLayout) findViewById(R.id.back_dim_layout);
+
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/Roboto-Regular.ttf")
@@ -128,6 +156,28 @@ public class MainActivity extends AppCompatActivity implements
                 .build());
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 0);
+
+        final Button buttonDetermineByTime = (Button) findViewById(R.id.button_determine_by_time);
+        buttonDetermineByTime.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onButtonDetermineByDateClick(v);
+            }
+        });
+        final Button buttonDetermineByFlightNumber = (Button) findViewById(R.id.button_determine_by_flightnr);
+        buttonDetermineByFlightNumber.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onButtonDetermineByFlightNumberClick(v);
+            }
+        });
+
+        final Button buttonDetermineByLocation = (Button) findViewById(R.id.button_determine_by_location);
+        buttonDetermineByLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                permissionsLayout.setVisibility(View.VISIBLE);
+                onAddPlaceButtonClicked(v);
+            }
+        });
 
     }
 
@@ -244,8 +294,8 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public void openSelectArrivalCheckMethod (View v){
-        Intent myIntent = new Intent(MainActivity.this, SelectArrivalCheckMethod.class);
-        MainActivity.this.startActivity(myIntent);
+        addNewJourney.setVisibility(View.GONE);
+        chooseMethod.setVisibility(View.VISIBLE);
     }
 
     public void onAddPlaceButtonClicked(View view) {
@@ -268,5 +318,108 @@ public class MainActivity extends AppCompatActivity implements
         } catch (Exception e) {
             Log.e(MainActivity.class.getSimpleName(), String.format("PlacePicker Exception: %s", e.getMessage()));
         }
+    }
+
+    public void onButtonDetermineByDateClick(View view) {
+
+        // get a reference to the already created main layout
+        RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.activity_main);
+
+        // inflate the layout of the popup window
+        back_dim_layout.setVisibility(View.VISIBLE);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popupView = inflater.inflate(R.layout.pick_time_layout, null);
+        final TimePicker timePicker1 = (TimePicker) popupView.findViewById(R.id.timePicker1);
+
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                back_dim_layout.setVisibility(View.GONE);
+            }
+        });
+
+        // show the popup window
+        popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
+        Button setTimeButton = (Button) popupView.findViewById(R.id.button_select_time);
+        setTimeButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                back_dim_layout.setVisibility(View.GONE);
+                int chosenHour = timePicker1.getHour();
+                int chosenMinute = timePicker1.getMinute();
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+                builder.setContentTitle("Are you there?");
+                builder.setContentText("      Yes      |      Not yet");
+                builder.setSmallIcon(R.drawable.ic_globe_primary_24dp);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                builder.setContentIntent(pendingIntent);
+                Notification notificationCompat = builder.build();
+                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getApplicationContext());
+                managerCompat.notify(0, notificationCompat);
+                popupWindow.dismiss();
+            }
+        });
+
+
+    }
+
+
+    public void onButtonDetermineByFlightNumberClick(View view) {
+        // get a reference to the already created main layout
+        RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.activity_main);
+
+        // inflate the layout of the popup window
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popupView = inflater.inflate(R.layout.enter_flight_number, null);
+
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        // show the popup window
+        popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
+        back_dim_layout.setVisibility(View.VISIBLE);
+
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                back_dim_layout.setVisibility(View.GONE);
+            }
+        });
+        final DatePicker datePicker = (DatePicker) popupView.findViewById(R.id.flight_date_picker);
+        final EditText flightNumberField = (EditText) popupView.findViewById(R.id.flight_number);
+        Button saveFlight = (Button) popupView.findViewById(R.id.button_save_the_flight);
+        saveFlight.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String flightNumber = flightNumberField.getText().toString();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://api.lufthansa.com")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                LufthansaService lufthansaService = retrofit.create(LufthansaService.class);
+                Call<FlightStatus> call = lufthansaService.getFlightStatus(flightNumber);
+                call.enqueue(new Callback<FlightStatus>() {
+                    @Override
+                    public void onResponse(Call<FlightStatus> call, Response<FlightStatus> response) {
+
+                        CharSequence responsetext = response.body().getFlightStatusResource().getFlights().getFlight().getArrival().getTimeStatus().getDefinition();
+                        Toast toast = Toast.makeText(getApplicationContext(), responsetext, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<FlightStatus> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
     }
 }

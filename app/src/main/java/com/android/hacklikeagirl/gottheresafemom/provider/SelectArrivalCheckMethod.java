@@ -22,7 +22,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.hacklikeagirl.gottheresafemom.ContactSelectionActivity;
-import com.android.hacklikeagirl.gottheresafemom.MainActivity;
 import com.android.hacklikeagirl.gottheresafemom.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -34,7 +33,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.android.hacklikeagirl.gottheresafemom.MainActivity.PLACE_PICKER_REQUEST;
+import static com.android.hacklikeagirl.gottheresafemom.provider.MainActivity.PLACE_PICKER_REQUEST;
 
 public class SelectArrivalCheckMethod extends AppCompatActivity {
 
@@ -54,26 +53,7 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
             }
         });
 
-        final Button buttonDetermineByTime = (Button) findViewById(R.id.button_determine_by_time);
-        buttonDetermineByTime.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                onButtonDetermineByDateClick(v);
-            }
-        });
-        final Button buttonDetermineByFlightNumber = (Button) findViewById(R.id.button_determine_by_flightnr);
-        buttonDetermineByFlightNumber.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                onButtonDetermineByFlightNumberClick(v);
-            }
-        });
 
-        final Button buttonDetermineByLocation = (Button) findViewById(R.id.button_determine_by_location);
-        buttonDetermineByLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onAddPlaceButtonClicked(v);
-            }
-        });
 
     }
 
@@ -128,6 +108,7 @@ public class SelectArrivalCheckMethod extends AppCompatActivity {
                 int chosenHour = timePicker1.getHour();
                 int chosenMinute = timePicker1.getMinute();
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+
                 builder.setContentTitle("Are you there?");
                 builder.setContentText("      Yes      |      Not yet");
                 builder.setSmallIcon(R.drawable.ic_globe_primary_24dp);
