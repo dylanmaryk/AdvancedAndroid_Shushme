@@ -42,11 +42,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -70,18 +70,15 @@ import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 
 public class MainActivity extends AppCompatActivity implements
         ConnectionCallbacks,
+        TimeListAdapter.Callbacks,
         OnConnectionFailedListener {
 
     // Constants
@@ -103,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements
     private RelativeLayout back_dim_layout;
     public static ArrayList<String> times_list;
     public String chosenTime;
+    private TextView addNewJourneytv;
+    final static int RQS_1 = 1;
 
     /**
      * Called when the activity is starting
@@ -115,6 +114,8 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
         times_list = new ArrayList<>();
 
+        Calendar now = Calendar.getInstance();
+
         // Set up the recycler view
         mRecyclerView = (RecyclerView) findViewById(R.id.places_list_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -126,6 +127,8 @@ public class MainActivity extends AppCompatActivity implements
         timeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         timeListAdapter = new TimeListAdapter(this, null);
         timeRecyclerView.setAdapter(timeListAdapter);
+
+        addNewJourneytv = (TextView) findViewById(R.id.add_new_journey_tv);
 
         // Initialize the switch state and Handle enable/disable switch change
         Switch onOffSwitch = (Switch) findViewById(R.id.enable_switch);
@@ -305,6 +308,7 @@ public class MainActivity extends AppCompatActivity implements
         Intent i = new Intent(MainActivity.this, ContactSelectionActivity.class);
         startActivity(i);
         addNewJourney.setVisibility(View.GONE);
+        addNewJourneytv.setVisibility(View.GONE);
         chooseMethod.setVisibility(View.VISIBLE);
     }
 
@@ -322,6 +326,7 @@ public class MainActivity extends AppCompatActivity implements
             Intent i = builder.build(this);
             chooseMethod.setVisibility(View.GONE);
             addNewJourney.setVisibility(View.VISIBLE);
+            addNewJourneytv.setVisibility(View.VISIBLE);
             startActivityForResult(i, PLACE_PICKER_REQUEST);
         } catch (GooglePlayServicesRepairableException e) {
             Log.e(MainActivity.class.getSimpleName(), String.format("GooglePlayServices Not Available [%s]", e.getMessage()));
@@ -342,6 +347,8 @@ public class MainActivity extends AppCompatActivity implements
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = inflater.inflate(R.layout.pick_time_layout, null);
         final TimePicker timePicker1 = (TimePicker) popupView.findViewById(R.id.timePicker1);
+        final View popupView2 = inflater.inflate(R.layout.pick_date_layout, null);
+        final DatePicker datePicker = (DatePicker) popupView2.findViewById(R.id.date_picker);
 
         // create the popup window
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -349,7 +356,10 @@ public class MainActivity extends AppCompatActivity implements
 
         boolean focusable = true; // lets taps outside the popup also dismiss it
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+
+        final PopupWindow popupWindowDate = new PopupWindow(popupView2,width,height,focusable);
+        popupWindowDate.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 back_dim_layout.setVisibility(View.GONE);
@@ -381,6 +391,7 @@ public class MainActivity extends AppCompatActivity implements
                 NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getApplicationContext());
                 managerCompat.notify(0, notificationCompat);
                 popupWindow.dismiss();
+
             }
         });
 
@@ -388,4 +399,35 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
+    @Override
+    public void onDateClicked(TimeListAdapter item) {
+
+        RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.activity_main);
+        back_dim_layout.setVisibility(View.VISIBLE);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popupView2 = inflater.inflate(R.layout.pick_date_layout, null);
+        final DatePicker datePicker = (DatePicker) popupView2.findViewById(R.id.date_picker);
+
+        int d
+
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        final PopupWindow popupWindowDate = new PopupWindow(popupView2,width,height,focusable);
+        popupWindowDate.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                back_dim_layout.setVisibility(View.GONE);
+                chooseMethod.setVisibility(View.GONE);
+                addNewJourney.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    @Override
+    public void onItemDelete(TimeListAdapter item) {
+
+    }
 }

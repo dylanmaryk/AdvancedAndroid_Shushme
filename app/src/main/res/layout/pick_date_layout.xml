@@ -4,26 +4,17 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight"
     android:weightSum="1">
-    <EditText
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/flight_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter flight number"
-        />
 
     <DatePicker
-        android:id="@+id/flight_date_picker"
+        android:id="@+id/date_picker"
         android:layout_width="match_parent"
         android:layout_height="393dp"/>
     <Button
         android:layout_marginTop="10dp"
-        android:id="@+id/button_save_the_flight"
+        android:id="@+id/save_the_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorButtons"
-        android:text="Save the flight" />
+        android:text="Save the date" />
 
 </LinearLayout>

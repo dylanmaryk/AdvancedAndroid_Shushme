@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.hacklikeagirl.gottheresafemom.provider.MainActivity;
@@ -21,6 +22,8 @@ public class TimeListAdapter extends RecyclerView.Adapter<TimeListAdapter.TimeVi
 
     private Context mContext;
     private ArrayList<String> mTimes = new ArrayList<>(0);
+    private Callbacks callbacks;
+
 
     /**
      * Constructor using the context and the db cursor
@@ -30,6 +33,16 @@ public class TimeListAdapter extends RecyclerView.Adapter<TimeListAdapter.TimeVi
     public TimeListAdapter(Context context, ArrayList<String> times) {
         this.mContext = context;
         this.mTimes = times;
+    }
+
+    public TimeListAdapter(Callbacks callbacks){
+        this.callbacks = callbacks;
+    }
+
+    public TimeListAdapter(Context context, ArrayList<String> times, Callbacks callbacks) {
+        this.mContext = context;
+        this.mTimes = times;
+        this.callbacks = callbacks;
     }
 
     /**
@@ -59,6 +72,7 @@ public class TimeListAdapter extends RecyclerView.Adapter<TimeListAdapter.TimeVi
         String date = "12.07.2018";
         holder.timeTextView.setText(MainActivity.times_list.get(position));
         holder.dateTextView.setText(date);
+
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,13 +110,35 @@ public class TimeListAdapter extends RecyclerView.Adapter<TimeListAdapter.TimeVi
         TextView timeTextView;
         TextView dateTextView;
         Button delete;
+        private TimeListAdapter item;
 
         public TimeViewHolder(View itemView) {
             super(itemView);
             timeTextView = (TextView) itemView.findViewById(R.id.time_text_view);
             dateTextView = (TextView) itemView.findViewById(R.id.date_text_view);
             delete = (Button) itemView.findViewById(R.id.delete);
+
+            dateTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callbacks.onDateClicked(item);
+                }
+            });
+
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callbacks.onItemDelete(item);
+                }
+            });
+
         }
 
+    }
+
+    public interface Callbacks {
+        void onDateClicked(TimeListAdapter item);
+
+        void onItemDelete(TimeListAdapter item);
     }
 }
